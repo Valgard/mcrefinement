@@ -14,4 +14,4 @@ For more informations see the website http://minecraft.valgard-lp.de/mods/mcrefi
 
 _The modifaction is under heavy development and new features will be added by my needs or your requests._
 
-Please report issues and feature ´request only on Github (https://github.com/Valgard/mcrefinement/issues).
+Please report issues and feature requests only on Github (https://github.com/Valgard/mcrefinement/issues).

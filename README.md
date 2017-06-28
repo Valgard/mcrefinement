@@ -12,6 +12,6 @@ MCRefinement change respectively add following recipes:
 
 For more informations see the website http://minecraft.valgard-lp.de/mods/mcrefinement.
 
-The modifaction is under heavy development and new features will be added by my needs or your requests.
+_The modifaction is under heavy development and new features will be added by my needs or your requests._
 
 Please report issues and feature ´request only on Github (https://github.com/Valgard/mcrefinement/issues).

@@ -1,0 +1,14 @@
+[{
+  "modid": "mcrefinement",
+  "name": "Minecraft Refinement",
+  "description": "",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "logoFile": "",
+  "url": "",
+  "updateJSON": "",
+  "authorList": ["Valgard Trontheim (a.k.a Sven Pöche)"],
+  "credits": "",
+  "dependencies": ["plantmegapack", "harvestcraft", "MoCreatures", "ExtrabiomesXL", "chisel", "UndergroundBiomes"],
+  "useDependencyInformation": "true"
+}]

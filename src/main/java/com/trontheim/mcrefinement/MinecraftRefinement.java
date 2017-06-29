@@ -166,43 +166,45 @@ public class MinecraftRefinement {
       strawberrySeed = GameRegistry.findItem("ExtrabiomesXL", "extrabiomes.seed");
     }
 
-    Iterator<IRecipe> recipes = CraftingManager.getInstance().getRecipeList().iterator();
-    while(recipes.hasNext()) {
-      ItemStack itemStack = recipes.next().getRecipeOutput();
-
-      // remove old hay recipes
-      if(itemStack != null && (itemStack.getItem() == Items.wheat || itemStack.getItem() == Item.getItemFromBlock(Blocks.hay_block)))
-      {
-        recipes.remove();
-        continue;
-      }
-
-      // remove old melon recipes
-      if(itemStack != null && (itemStack.getItem() == Items.melon || itemStack.getItem() == Item.getItemFromBlock(Blocks.melon_block)))
-      {
-        recipes.remove();
-        continue;
-      }
-
-      // Mo'Creatures
-      if(installedModules.get("MoCreatures"))
-      {
-        // remove old hay stack recipes
-        if(itemStack != null && itemStack.getItem() == haystack)
+    {
+      Iterator<IRecipe> recipes = CraftingManager.getInstance().getRecipeList().iterator();
+      while(recipes.hasNext()) {
+        ItemStack itemStack = recipes.next().getRecipeOutput();
+  
+        // remove old hay recipes
+        if(itemStack != null && (itemStack.getItem() == Items.wheat || itemStack.getItem() == Item.getItemFromBlock(Blocks.hay_block)))
         {
           recipes.remove();
           continue;
         }
-      }
-
-      // ExtraBiomesXL
-      if(installedModules.get("ExtrabiomesXL") && installedModules.get("harvestcraft"))
-      {
-        // remove old hay strawberry seed recipes
-        if(itemStack != null && itemStack.getItem() == strawberrySeed)
+  
+        // remove old melon recipes
+        if(itemStack != null && (itemStack.getItem() == Items.melon || itemStack.getItem() == Item.getItemFromBlock(Blocks.melon_block)))
         {
           recipes.remove();
           continue;
+        }
+  
+        // Mo'Creatures
+        if(installedModules.get("MoCreatures"))
+        {
+          // remove old hay stack recipes
+          if(itemStack != null && itemStack.getItem() == haystack)
+          {
+            recipes.remove();
+            continue;
+          }
+        }
+  
+        // ExtraBiomesXL
+        if(installedModules.get("ExtrabiomesXL") && installedModules.get("harvestcraft"))
+        {
+          // remove old hay strawberry seed recipes
+          if(itemStack != null && itemStack.getItem() == strawberrySeed)
+          {
+            recipes.remove();
+            continue;
+          }
         }
       }
     }

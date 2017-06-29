@@ -69,17 +69,19 @@ public class MinecraftRefinement {
     supportedModules.put("UndergroundBiomes", "Underground Biomes Constructs");
 
     HashMap<String, Boolean> installedModules = new HashMap<String, Boolean>();
-    Iterator modules = supportedModules.entrySet().iterator();
-    while(modules.hasNext()) {
-      HashMap.Entry module = (HashMap.Entry) modules.next();
-      String key = module.getKey().toString();
-      Boolean value = Loader.isModLoaded(module.getKey().toString());
-      installedModules.put(key, value);
-      if(value) {
-        this.logger.info(msgPrefix + module.getValue().toString() + " support activated.");
-      }
-      else {
-        this.logger.info(msgPrefix + module.getValue().toString() + " not installed.");
+
+    {
+      Iterator modules = supportedModules.entrySet().iterator();
+      while(modules.hasNext()) {
+        HashMap.Entry module = (HashMap.Entry) modules.next();
+        String key = module.getKey().toString();
+        Boolean value = Loader.isModLoaded(module.getKey().toString());
+        installedModules.put(key, value);
+        if(value) {
+          this.logger.info(msgPrefix + module.getValue().toString() + " support activated.");
+        } else {
+          this.logger.info(msgPrefix + module.getValue().toString() + " not installed.");
+        }
       }
     }
 

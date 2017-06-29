@@ -57,8 +57,8 @@ public class MinecraftRefinement {
       msgPrefix = "["+MODID+"]: ";
     }
 
-    this.logger.info(msgPrefix + "Item List: " + Item.itemRegistry.getKeys());
-    this.logger.info(msgPrefix + "Block List: " + Block.blockRegistry.getKeys());
+    // this.logger.info(msgPrefix + "Item List: " + Item.itemRegistry.getKeys());
+    // this.logger.info(msgPrefix + "Block List: " + Block.blockRegistry.getKeys());
 
     HashMap<String, String> supportedModules = new HashMap<String, String>();
     supportedModules.put("harvestcraft", "Pam's HarvestCraft");

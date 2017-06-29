@@ -32,7 +32,7 @@ public class MinecraftRefinement {
 
   static final String MODID = "mcrefinement";
   static final String NAME = "Minecraft Refinement";
-  static final String VERSION = "0.0.1-alpha";
+  static final String VERSION = "0.0.2-alpha";
   static final String MCVERSION = "[1.7.10]";
 
   private Logger logger;

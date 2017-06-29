@@ -12,6 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.launchwrapper.Launch;
 import org.apache.logging.log4j.Logger;
@@ -134,8 +135,36 @@ public class MinecraftRefinement {
             continue;
           }
         }
+
+        // HarvestCraft
+        if(installedModules.get("harvestcraft")) {
+          // remove old bread recipes
+          if(itemStack != null && itemStack.getItem() == Items.bread) {
+            this.logger.info(msgPrefix + "recipe removed: " + RecipePrinter.print(recipe));
+            recipes.remove();
+            continue;
+          }
+        }
       }
     }
+
+    {
+      // iterate furnace list and remove results
+      Iterator<HashMap.Entry> results = FurnaceRecipes.smelting().getSmeltingList().entrySet().iterator();
+      while(results.hasNext()) {
+        HashMap.Entry result = (HashMap.Entry) results.next();
+        ItemStack itemInput = (ItemStack) result.getKey();
+        ItemStack itemOutput = (ItemStack) result.getValue();
+
+        // remove old bread furnace result
+        if(itemOutput != null && itemOutput.getItem() == Items.bread) {
+          this.logger.info(msgPrefix + "recipe removed: " + RecipePrinter.print(itemInput, itemOutput));
+          results.remove();
+          continue;
+        }
+      }
+    }
+
 
     // add new hay bale recipes
     GameRegistry.addRecipe(new ItemStack(Blocks.hay_block), "##", "##", '#', Items.wheat);
@@ -228,6 +257,13 @@ public class MinecraftRefinement {
       GameRegistry.addShapelessRecipe(new ItemStack(marbleUnderground, 1, 2), new ItemStack(marbleChisel));
       GameRegistry.addShapelessRecipe(new ItemStack(marbleChisel), new ItemStack(marbleUnderground, 1, 2));
 
+    }
+
+    // HarvestCraft
+    if(installedModules.get("harvestcraft")) {
+      // add new bread recipes
+      GameRegistry.addShapelessRecipe(new ItemStack(Items.bread), GameRegistry.findItem("harvestcraft", "doughItem"), GameRegistry.findItem("harvestcraft", "bakewareItem"));
+      GameRegistry.addSmelting(GameRegistry.findItem("harvestcraft", "doughItem"), new ItemStack(Items.bread), 0.35F);
     }
   }
 

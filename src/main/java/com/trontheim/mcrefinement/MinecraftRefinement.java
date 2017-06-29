@@ -24,8 +24,9 @@ import java.util.Iterator;
         modid = MinecraftRefinement.MODID,
         name = MinecraftRefinement.NAME,
         version = MinecraftRefinement.VERSION,
-        acceptedMinecraftVersions = MinecraftRefinement.MCVERSION
+        acceptedMinecraftVersions = MinecraftRefinement.MCVERSION,
         // updateJSON = "http://minecraft.valgard-lp.de"
+        dependencies = "plantmegapack, harvestcraft, MoCreatures, ExtrabiomesXL, chisel, UndergroundBiomes"
 )
 public class MinecraftRefinement {
 

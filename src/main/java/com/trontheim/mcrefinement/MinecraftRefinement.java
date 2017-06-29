@@ -38,19 +38,16 @@ public class MinecraftRefinement {
   private Logger logger;
 
   @Mod.EventHandler
-  public void preinit(FMLPreInitializationEvent event)
-  {
+  public void preinit(FMLPreInitializationEvent event) {
     this.logger = event.getModLog();
   }
 
   @Mod.EventHandler
-  public void init(FMLInitializationEvent event)
-  {
+  public void init(FMLInitializationEvent event) {
   }
 
   @Mod.EventHandler
-  public void postinit(FMLPostInitializationEvent event)
-  {
+  public void postinit(FMLPostInitializationEvent event) {
 
     String msgPrefix = "";
     if(!((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment"))) {
@@ -85,9 +82,74 @@ public class MinecraftRefinement {
       }
     }
 
+    Item haystack = null;
+    Item strawberrySeed = null;
+
+    // Mo'Creatures
+    if(installedModules.get("MoCreatures")) {
+      haystack = GameRegistry.findItem("MoCreatures", "haystack");
+    }
+
+    // ExtraBiomesXL
+    if(installedModules.get("ExtrabiomesXL") && installedModules.get("harvestcraft")) {
+      strawberrySeed = GameRegistry.findItem("ExtrabiomesXL", "extrabiomes.seed");
+    }
+
+    {
+      Iterator<IRecipe> recipes = CraftingManager.getInstance().getRecipeList().iterator();
+      while(recipes.hasNext()) {
+        ItemStack itemStack = recipes.next().getRecipeOutput();
+  
+        // remove old hay bale recipes
+        if(itemStack != null && (itemStack.getItem() == Items.wheat || itemStack.getItem() == Item.getItemFromBlock(Blocks.hay_block))) {
+          recipes.remove();
+          continue;
+        }
+
+        // remove old melon recipes
+        if(itemStack != null && (itemStack.getItem() == Items.melon || itemStack.getItem() == Item.getItemFromBlock(Blocks.melon_block))) {
+          recipes.remove();
+          continue;
+        }
+
+        // Mo'Creatures
+        if(installedModules.get("MoCreatures")) {
+          // remove old hay stack recipes
+          if(itemStack != null && itemStack.getItem() == haystack) {
+            recipes.remove();
+            continue;
+          }
+        }
+
+        // ExtraBiomesXL
+        if(installedModules.get("ExtrabiomesXL") && installedModules.get("harvestcraft")) {
+          // remove old strawberry seed recipes
+          if(itemStack != null && itemStack.getItem() == strawberrySeed)
+          {
+            recipes.remove();
+            continue;
+          }
+        }
+      }
+    }
+
+    // add new hay bale recipes
+    GameRegistry.addRecipe(new ItemStack(Blocks.hay_block), "##", "##", '#', Items.wheat);
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.wheat, 4), new ItemStack(Blocks.hay_block));
+
+    // add new melon recipes
+    GameRegistry.addRecipe(new ItemStack(Blocks.melon_block), "##", "##", '#', Items.melon);
+    GameRegistry.addShapelessRecipe(new ItemStack(Items.melon, 4), new ItemStack(Blocks.melon_block));
+
+    // Mo'Creatures
+    if(installedModules.get("MoCreatures")) {
+      // add new hay stack recipes
+      GameRegistry.addRecipe(new ItemStack(haystack), "ww", 'w', Items.wheat);
+      GameRegistry.addShapelessRecipe(new ItemStack(Items.wheat, 2), new ItemStack(haystack));
+    }
+
     // Plant Mega Pack
     if(installedModules.get("plantmegapack") && installedModules.get("harvestcraft")) {
-
       // Items
       Item itemFrom;
       Item itemTo;
@@ -132,6 +194,9 @@ public class MinecraftRefinement {
       // Juicer
       Item itemJuicer = GameRegistry.findItem("harvestcraft", "juicerItem");
 
+      // add new strawberry seed recipes
+      GameRegistry.addShapelessRecipe(new ItemStack(GameRegistry.findItem("harvestcraft", "strawberryseedItem")), new ItemStack(strawberrySeed));
+
       // Strawberry
       itemFrom = GameRegistry.findItem("ExtrabiomesXL", "extrabiomes.crop");
       itemTo = GameRegistry.findItem("harvestcraft", "strawberryItem");
@@ -149,86 +214,6 @@ public class MinecraftRefinement {
       itemFrom = GameRegistry.findItem("ExtrabiomesXL", "extrabiomes.food");
       itemTo = GameRegistry.findItem("harvestcraft", "chocolatestrawberryItem");
       GameRegistry.addShapelessRecipe(new ItemStack(itemTo), new ItemStack(itemFrom, 1, 1));
-    }
-
-    Item haystack = null;
-    Item strawberrySeed = null;
-
-    // Mo'Creatures
-    if(installedModules.get("MoCreatures"))
-    {
-      haystack = GameRegistry.findItem("MoCreatures", "haystack");
-    }
-
-    // ExtraBiomesXL
-    if(installedModules.get("ExtrabiomesXL") && installedModules.get("harvestcraft"))
-    {
-      strawberrySeed = GameRegistry.findItem("ExtrabiomesXL", "extrabiomes.seed");
-    }
-
-    {
-      Iterator<IRecipe> recipes = CraftingManager.getInstance().getRecipeList().iterator();
-      while(recipes.hasNext()) {
-        ItemStack itemStack = recipes.next().getRecipeOutput();
-  
-        // remove old hay recipes
-        if(itemStack != null && (itemStack.getItem() == Items.wheat || itemStack.getItem() == Item.getItemFromBlock(Blocks.hay_block)))
-        {
-          recipes.remove();
-          continue;
-        }
-  
-        // remove old melon recipes
-        if(itemStack != null && (itemStack.getItem() == Items.melon || itemStack.getItem() == Item.getItemFromBlock(Blocks.melon_block)))
-        {
-          recipes.remove();
-          continue;
-        }
-  
-        // Mo'Creatures
-        if(installedModules.get("MoCreatures"))
-        {
-          // remove old hay stack recipes
-          if(itemStack != null && itemStack.getItem() == haystack)
-          {
-            recipes.remove();
-            continue;
-          }
-        }
-  
-        // ExtraBiomesXL
-        if(installedModules.get("ExtrabiomesXL") && installedModules.get("harvestcraft"))
-        {
-          // remove old hay strawberry seed recipes
-          if(itemStack != null && itemStack.getItem() == strawberrySeed)
-          {
-            recipes.remove();
-            continue;
-          }
-        }
-      }
-    }
-
-    // add new hay recipes
-    GameRegistry.addRecipe(new ItemStack(Blocks.hay_block), "##", "##", '#', Items.wheat);
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.wheat, 4), new ItemStack(Blocks.hay_block));
-
-    // add new melon recipes
-    GameRegistry.addRecipe(new ItemStack(Blocks.melon_block), "##", "##", '#', Items.melon);
-    GameRegistry.addShapelessRecipe(new ItemStack(Items.melon, 4), new ItemStack(Blocks.melon_block));
-
-    // Mo'Creatures
-    if(installedModules.get("MoCreatures"))
-    {
-      // add new hay stack recipes
-      GameRegistry.addRecipe(new ItemStack(haystack), "ww", 'w', Items.wheat);
-      GameRegistry.addShapelessRecipe(new ItemStack(Items.wheat, 2), new ItemStack(haystack));
-    }
-
-    // ExtraBiomesXL
-    if(installedModules.get("ExtrabiomesXL") && installedModules.get("harvestcraft"))
-    {
-      GameRegistry.addShapelessRecipe(new ItemStack(GameRegistry.findItem("harvestcraft", "strawberryseedItem")), new ItemStack(strawberrySeed));
     }
 
     // Underground Biomes

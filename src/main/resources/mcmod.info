@@ -9,6 +9,7 @@
   "updateJSON": "",
   "authorList": ["Valgard Trontheim (a.k.a Sven Pöche)"],
   "credits": "",
+  "requiredMods": [ "Forge" ],
   "dependencies": ["plantmegapack", "harvestcraft", "MoCreatures", "ExtrabiomesXL", "chisel", "UndergroundBiomes"],
   "useDependencyInformation": "true"
 }]

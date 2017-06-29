@@ -1,6 +1,6 @@
 package com.trontheim.mcrefinement;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import com.trontheim.mcrefinement.util.RecipePrinter;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -8,7 +8,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
-import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 
 @Mod(
         modid = MinecraftRefinement.MODID,
@@ -96,18 +94,22 @@ public class MinecraftRefinement {
     }
 
     {
+      // iterate recipe list and remove recipes
       Iterator<IRecipe> recipes = CraftingManager.getInstance().getRecipeList().iterator();
       while(recipes.hasNext()) {
-        ItemStack itemStack = recipes.next().getRecipeOutput();
-  
+        IRecipe recipe = recipes.next();
+        ItemStack itemStack = recipe.getRecipeOutput();
+
         // remove old hay bale recipes
         if(itemStack != null && (itemStack.getItem() == Items.wheat || itemStack.getItem() == Item.getItemFromBlock(Blocks.hay_block))) {
+          this.logger.info(msgPrefix + "recipe removed: " + RecipePrinter.print(recipe));
           recipes.remove();
           continue;
         }
 
         // remove old melon recipes
         if(itemStack != null && (itemStack.getItem() == Items.melon || itemStack.getItem() == Item.getItemFromBlock(Blocks.melon_block))) {
+          this.logger.info(msgPrefix + "recipe removed: " + RecipePrinter.print(recipe));
           recipes.remove();
           continue;
         }
@@ -116,6 +118,7 @@ public class MinecraftRefinement {
         if(installedModules.get("MoCreatures")) {
           // remove old hay stack recipes
           if(itemStack != null && itemStack.getItem() == haystack) {
+            this.logger.info(msgPrefix + "recipe removed: " + RecipePrinter.print(recipe));
             recipes.remove();
             continue;
           }
@@ -126,6 +129,7 @@ public class MinecraftRefinement {
           // remove old strawberry seed recipes
           if(itemStack != null && itemStack.getItem() == strawberrySeed)
           {
+            this.logger.info(msgPrefix + "recipe removed: " + RecipePrinter.print(recipe));
             recipes.remove();
             continue;
           }
